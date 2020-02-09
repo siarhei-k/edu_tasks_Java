@@ -1,3 +1,14 @@
+/***
+ *Rules:
+ * <sentence> ::= <simple_sentence> [ <conjunction> <sentence> ]
+ * <simple_sentence> ::= <noun_phrase> <verb_phrase>
+ * <noun_phrase> ::= <proper_noun> |
+ * <determiner> [ <adjective> ]. <common_noun> [ who <verb_phrase> ]
+ * <verb_phrase> ::= <intransitive_verb> |
+ * <transitive_verb> <noun_phrase> |
+ * is <adjective> |
+ ***/
+
 public class SimpleRandomSentences {
     static final String[] conjunction = { " and", " or", " but", " because" };
     static final String[] proper_noun = { " Fred", " Jane", " Richard Nixon", " Miss America" };
@@ -7,41 +18,34 @@ public class SimpleRandomSentences {
     static final String[] intransitive_verb = { " runs", " jumps", " talks", " sleeps" };
     static final String[] transitive_verb = { " loves", " hates", " sees", " konws", " looks for", " finds" };
 
-    // picking a random item from an array of strings above.
+    // take a random item from strings
     static void randomItem(String[] listOfStrings) {
-        int pickingItem = (int) (Math.random() * listOfStrings.length);
-        System.out.print(listOfStrings[pickingItem]);
+        int pickedItem = (int) (Math.random() * listOfStrings.length);
+        System.out.print(listOfStrings[pickedItem]);
     }
 
+    // printing text with 5 Random Simple Sentences
     public static void main(String[] args) {
-        System.out.println("Be welcome! This program will print 10 random phrases...\n\n");
-        System.out.println("********************************");
-        for (int i = 1; i <= 10; i++) {
-            System.out.print(i);
+        for (int i = 1; i <= 5; i++) {
             randomSentence();
-            System.out.println(".\n");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-            }
+            System.out.print(".");
+            System.out.println("");
         }
-        System.out.println("********************************");
-        System.out.println("Bye!! See you in the next forum!");
     }
 
     // <sentence> ::= <simple_sentence> [ <conjunction> <sentence> ]
     static void randomSentence() {
-        randomSimpleSentence(); // calls randomSimpleSentence method
+        randomSimpleSentence(); // calls randomSimpleSentence
         if (Math.random() > 0.4) { // 60% chance of having [ <conjunction> <sentence> ]
             randomItem(conjunction);
-            randomSentence(); // recursivity calling itself
+            randomSentence(); // recursion
         }
     }
 
     // <simple_sentence> ::= <noun_phrase> <verb_phrase>
     static void randomSimpleSentence() {
-        randomNounPhrase(); // calls randomNounPhrase method
-        randomVerbPhrase(); // calls randomVerbPhrase method
+        randomNounPhrase(); // calls randomNounPhrase
+        randomVerbPhrase(); // calls randomVerbPhrase
     }
 
     /***
@@ -57,7 +61,7 @@ public class SimpleRandomSentences {
             randomItem(common_noun);
             if (Math.random() > 0.5) { // 50% chance of having verb phrase
                 System.out.print(" who");
-                randomVerbPhrase(); // calls randomVerbPhrase method
+                randomVerbPhrase(); // calls randomVerbPhrase
             }
         }
     }
@@ -74,7 +78,7 @@ public class SimpleRandomSentences {
                 break;
             case 2:
                 randomItem(transitive_verb);
-                randomNounPhrase(); // calls randomNounPhrase method
+                randomNounPhrase(); // calls randomNounPhrase
                 break;
             case 3:
                 System.out.print(" is");
@@ -82,7 +86,7 @@ public class SimpleRandomSentences {
                 break;
             default:
                 System.out.print(" believes that");
-                randomSimpleSentence(); // calls randomSimpleSentence method
+                randomSimpleSentence(); // calls randomSimpleSentence
         }
     }
 }
